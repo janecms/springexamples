@@ -4,12 +4,14 @@ import com.hellojd.springexample.bean.Blog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -40,6 +42,15 @@ public class BlogDaoImpl implements BlogDao {
     @Override
     public Blog get(int blogId) {
         final String GET_BLOG_BY_ID="select id,title,author from blog where id=?";
-        return this.jdbcTemplate.queryForObject(GET_BLOG_BY_ID,Blog.class,blogId);
+        return this.jdbcTemplate.queryForObject(GET_BLOG_BY_ID, new RowMapper<Blog>() {
+            @Override
+            public Blog mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Blog blog= new Blog();
+                blog.setAuthor(rs.getString("author"));
+                blog.setTitle(rs.getString("title"));
+                blog.setId(rs.getInt("id"));
+                return blog;
+            }
+        },blogId);
     }
 }
