@@ -1,0 +1,11 @@
+target/
+**/.classpath
+**/.project
+**/.settings/
+**/WEB-INF/classes/
+.idea/
+service/logs/
+*.iml
+*.ipr
+*.iws
+.project
