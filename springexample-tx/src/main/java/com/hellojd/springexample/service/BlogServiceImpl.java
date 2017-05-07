@@ -6,7 +6,9 @@ import com.hellojd.springexample.dao.BlogDao;
 import com.hellojd.springexample.dao.EventDao;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
@@ -15,7 +17,8 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/5/7.
  */
-@Service("blogService")
+@Component("blogService")
+@Transactional
 public class BlogServiceImpl implements  BlogService {
     private static final Logger LOGGER = Logger.getLogger(BlogServiceImpl.class);
     @Autowired
@@ -23,7 +26,7 @@ public class BlogServiceImpl implements  BlogService {
     @Autowired
     private EventDao eventDao;
     @Override
-    @Transactional
+    @Transactional(isolation= Isolation.READ_COMMITTED, rollbackFor={Exception.class, RuntimeException.class})
     public int saveBlog(Blog blog) {
            int blogId=0;
         try {
@@ -32,9 +35,9 @@ public class BlogServiceImpl implements  BlogService {
             event.setEventDate(new Date());
             String eventStr= MessageFormat.format("this is a event from blog {0}", blogId);
             event.setTitle(eventStr);
-            if(blog.getTitle().contains("error")){
-                throw new Exception("模拟失败情况，手动触发异常");
-            }
+//            if(blog.getTitle().contains("error")){
+//                throw new Exception("模拟失败情况，手动触发异常");
+//            }
             this.eventDao.save(event);
         } finally {
             return blogId;
