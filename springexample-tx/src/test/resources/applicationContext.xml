@@ -26,29 +26,4 @@
         <property name="dataSource"  ref="dataSource" />
     </bean>
     <tx:annotation-driven proxy-target-class="false"  transaction-manager="transactionManager" />
-
-    <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
-    <!--
-    <tx:advice id="txAdvice"  transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="*" rollback-for="Exception" propagation="REQUIRED" isolation="READ_COMMITTED"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <aop:config>
-        <aop:pointcut id="servicepointcut" expression="execution(* com.hellojd.springexample.service.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicepointcut"></aop:advisor>
-    </aop:config>
-    -->
-    <bean id="blogServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="target" ref="blogService"/>
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="transactionAttributes">
-            <props>
-                <prop key="save*">PROPAGATION_REQUIRED</prop>
-                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
-            </props>
-        </property>
-    </bean>
 </beans>

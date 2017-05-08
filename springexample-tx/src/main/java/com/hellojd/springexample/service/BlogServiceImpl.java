@@ -25,23 +25,18 @@ public class BlogServiceImpl implements  BlogService {
     private BlogDao blogDao;
     @Autowired
     private EventDao eventDao;
+
     @Override
     @Transactional(isolation= Isolation.READ_COMMITTED, rollbackFor={Exception.class, RuntimeException.class})
     public int saveBlog(Blog blog) {
-           int blogId=0;
-        try {
+            int blogId=0;
             blogId = this.blogDao.save(blog);
             Event event = new Event();
             event.setEventDate(new Date());
             String eventStr= MessageFormat.format("this is a event from blog {0}", blogId);
             event.setTitle(eventStr);
-//            if(blog.getTitle().contains("error")){
-//                throw new Exception("模拟失败情况，手动触发异常");
-//            }
             this.eventDao.save(event);
-        } finally {
-            return blogId;
-        }
+        return blogId;
     }
 
     @Override
