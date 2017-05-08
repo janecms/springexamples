@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
-public class AnnotationApplicatioContextTests
+public class ApplicatioContextTests
 {
     @Resource
     BlogDao blogDao;

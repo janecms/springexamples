@@ -19,7 +19,6 @@ import java.util.Date;
  * Created by Administrator on 2017/5/7.
  * 编程式事务
  */
-@Service("blogProgramService")
 public class BlogProgramServiceImpl implements BlogService {
     private static final Logger LOGGER = Logger.getLogger(BlogProgramServiceImpl.class);
     @Autowired

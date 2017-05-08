@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by Administrator on 2017/5/7.
  */
-@Repository
 public class EventDaoImpl implements EventDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;

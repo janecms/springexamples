@@ -20,7 +20,6 @@ import java.sql.SQLException;
 /**
  * Created by Administrator on 2017/5/7.
  */
-@Repository
 public class BlogDaoImpl implements BlogDao {
     private static final Logger LOGGER = Logger.getLogger(BlogDaoImpl.class);
     @Autowired

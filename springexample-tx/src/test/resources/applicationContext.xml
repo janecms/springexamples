@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="database.properties" />
-    <context:component-scan base-package="com.hellojd.springexample.**" />
+
     <context:annotation-config />
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -25,10 +25,8 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource"  ref="dataSource" />
     </bean>
-    <tx:annotation-driven proxy-target-class="false"  transaction-manager="transactionManager" />
 
     <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
-    <!--
     <tx:advice id="txAdvice"  transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
@@ -40,15 +38,8 @@
         <aop:pointcut id="servicepointcut" expression="execution(* com.hellojd.springexample.service.*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicepointcut"></aop:advisor>
     </aop:config>
-    -->
-    <bean id="blogServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="target" ref="blogService"/>
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="transactionAttributes">
-            <props>
-                <prop key="save*">PROPAGATION_REQUIRED</prop>
-                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
-            </props>
-        </property>
-    </bean>
+<bean id="eventDao" class="com.hellojd.springexample.dao.EventDaoImpl"></bean>
+    <bean id="blogDao" class="com.hellojd.springexample.dao.BlogDaoImpl"></bean>
+    <bean id="blogService" class="com.hellojd.springexample.service.BlogServiceImpl"></bean>
+    <bean id="blogProgramService" class="com.hellojd.springexample.service.BlogProgramServiceImpl"></bean>
 </beans>
