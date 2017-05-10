@@ -12,15 +12,7 @@
 
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework.transaction">
-        <level value="debug" />
-    </logger>
-
-    <logger name="org.springframework.beans">
-        <level value="info" />
-    </logger>
-
-    <logger name="org.springframework.context">
-        <level value="info" />
+        <level value="error" />
     </logger>
 
     <logger name="org.springframework.web">
@@ -29,7 +21,7 @@
 
     <!-- Root Logger -->
     <root>
-        <priority value="debug" />
+        <priority value="error" />
         <appender-ref ref="console" />
     </root>
 </log4j:configuration>

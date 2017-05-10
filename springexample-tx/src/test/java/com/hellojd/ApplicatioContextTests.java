@@ -16,7 +16,7 @@ import java.util.Date;
  * Unit test for simple App.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/applicationContext.xml")
+@ContextConfiguration("/applicationContext-test.xml")
 public class ApplicatioContextTests
 {
     @Resource
@@ -87,5 +87,14 @@ public class ApplicatioContextTests
         assertTrue(blogId>0);
         Blog blogPO = this.blogService.get(blogId);
         assertNull(blogPO);
+    }
+
+    //隔离级别测试
+    @Resource
+    IsolationServiceTest testIsolationService;
+
+    @Test
+    public void testIso1(){
+        testIsolationService.isolationCOMMITTED();
     }
 }
